@@ -1,4 +1,3 @@
-
 module.exports = {
   env: {
     browser: false,
@@ -40,4 +39,3 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 };
-
