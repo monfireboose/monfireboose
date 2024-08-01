@@ -1,3 +1,1 @@
-export const helloWorld = () => {
-  console.log('Hello World');
-};
+export { connect } from './src/features';
