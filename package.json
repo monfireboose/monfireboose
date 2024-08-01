@@ -1,0 +1,51 @@
+{
+  "name": "fireboose",
+  "version": "0.1.0",
+  "description": "A lightweight JavaScript library that provides a high level API for interacting with Firebase",
+  "private": false,
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup index.ts --format cjs,esm --dts",
+    "lint": "tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.4"
+  },
+  "keywords": [
+    "firebase",
+    "javascript",
+    "library",
+    "api",
+    "interact",
+    "data",
+    "database",
+    "authentication",
+    "storage",
+    "firestore",
+    "cloud",
+    "storage",
+    "realtime",
+    "cloud",
+    "messaging",
+    "analytics",
+    "hosting",
+    "functions"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fireboose/fireboose.git"
+  },
+  "author": "Albert Arakelyan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fireboose/fireboose/issues"
+  },
+  "homepage": "https://github.com/fireboose/fireboose#readme"
+}
