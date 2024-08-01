@@ -2,6 +2,4 @@ const connect = () => {
   console.log('connect');
 };
 
-export {
-  connect,
-};
+export { connect };
