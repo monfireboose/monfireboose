@@ -1,1 +1,1 @@
-export { connect } from './src/features';
+export * from './src/features';
