@@ -8,9 +8,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup index.ts --format cjs,esm --dts",
-    "lint": "tsc",
-    "test": "jest",
     "lint": "eslint . --ext .ts --ext .tsx",
+    "test": "jest",
     "lint:fix": "eslint --fix . --ext .ts --ext .tsx",
     "prepare": "npm run build"
   },
@@ -56,5 +55,8 @@
   "bugs": {
     "url": "https://github.com/fireboose/fireboose/issues"
   },
-  "homepage": "https://github.com/fireboose/fireboose#readme"
+  "homepage": "https://github.com/fireboose/fireboose#readme",
+  "dependencies": {
+    "firebase": "^10.12.5"
+  }
 }
