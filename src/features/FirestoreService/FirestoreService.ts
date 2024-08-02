@@ -25,7 +25,9 @@ class FirestoreService {
   ): Promise<T[] | undefined> {
     const dbCollection = collection(this.db, path);
 
-    const pathWithQuery = getQuery.length ? query(dbCollection, ...getQuery) : dbCollection;
+    const pathWithQuery = getQuery.length
+      ? query(dbCollection, ...getQuery)
+      : dbCollection;
 
     const response = await getDocs(pathWithQuery);
 
@@ -81,4 +83,4 @@ class FirestoreService {
   }
 }
 
-export default FirestoreService;
+export { FirestoreService };
