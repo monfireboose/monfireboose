@@ -18,21 +18,21 @@ const parseQuery = (query: GetQueryType[]): QueryConstraint[] => {
       const [field, filter] = Object.entries(q)[0]!;
 
       return where(field, QueryConditionEnum[filter.condition], filter);
-    } else {
-      const [field, order] = Object.entries(q)[0]!;
-
-      let parsedOrder: GetQuerySortParsedValuesType;
-
-      if (order === 1) {
-        parsedOrder = 'asc';
-      } else if (order === -1) {
-        parsedOrder = 'desc';
-      } else {
-        parsedOrder = order;
-      }
-
-      return orderBy(field, parsedOrder);
     }
+
+    const [field, order] = Object.entries(q)[0]!;
+
+    let parsedOrder: GetQuerySortParsedValuesType;
+
+    if (order === 1) {
+      parsedOrder = 'asc';
+    } else if (order === -1) {
+      parsedOrder = 'desc';
+    } else {
+      parsedOrder = order;
+    }
+
+    return orderBy(field, parsedOrder);
   });
 };
 
