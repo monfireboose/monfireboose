@@ -30,7 +30,7 @@ export type GetQueryFilterValueType = {
 
 export type GetQueryFilterType = Record<string, GetQueryFilterValueType>;
 
-type GetQuerySortValuesType = 'asc' | 'desc' | 1 | -1;
+export type GetQuerySortValuesType = 'asc' | 'desc' | 1 | -1;
 
 export type GetQuerySortParsedValuesType = 'asc' | 'desc';
 
