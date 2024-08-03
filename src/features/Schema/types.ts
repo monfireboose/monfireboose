@@ -1,7 +1,7 @@
-type SchemaObjectValueTypeType = string | string[];
+type SchemaObjectValueTypeType = 'string' | 'number' | 'boolean' | 'date';
 
 type SchemaObjectValueType = {
-  type: string;
+  type: SchemaObjectValueTypeType | SchemaObjectValueTypeType[];
   required?: boolean;
   default?: any;
   ref?: string;
