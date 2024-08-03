@@ -13,6 +13,10 @@
     "lint:fix": "eslint --fix . --ext .ts --ext .tsx",
     "prepare": "npm run build"
   },
+  "dependencies": {
+    "firebase": "^10.12.5",
+    "pluralize": "^8.0.0"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.11",
     "@types/pluralize": "^0.0.33",
@@ -56,9 +60,5 @@
   "bugs": {
     "url": "https://github.com/fireboose/fireboose/issues"
   },
-  "homepage": "https://github.com/fireboose/fireboose#readme",
-  "dependencies": {
-    "firebase": "^10.12.5",
-    "pluralize": "^8.0.0"
-  }
+  "homepage": "https://github.com/fireboose/fireboose#readme"
 }

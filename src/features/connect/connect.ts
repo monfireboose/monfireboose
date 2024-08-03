@@ -39,7 +39,15 @@ class FirebaseConfig {
 }
 
 const connect = (firebaseConfig: FirebaseConfig) => {
-  return initializeApp(firebaseConfig);
+  return new Promise((resolve, reject) => {
+    const app = initializeApp(firebaseConfig);
+
+    if (app && app.name) {
+      resolve(app);
+    } else {
+      reject('Failed to initialize Firebase app');
+    }
+  });
 };
 
 export { connect, FirebaseConfig };

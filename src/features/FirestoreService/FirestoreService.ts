@@ -4,12 +4,10 @@ import {
   query,
   getDocs,
   getDoc,
-  setDoc,
   addDoc,
   updateDoc,
   deleteDoc,
   QueryConstraint,
-  DocumentReference,
   CollectionReference,
   getFirestore,
 } from 'firebase/firestore';
@@ -61,9 +59,12 @@ class FirestoreService {
   async add<T extends object>(path: string, data: T, id?: string) {
     const newDoc = id ? doc(this.db, path, id) : collection(this.db, path);
 
+    // TODO open in realy needed case
+    /*
     if (id) {
       return setDoc(newDoc as DocumentReference, data);
     }
+    */
 
     return addDoc(newDoc as CollectionReference, data);
   }
