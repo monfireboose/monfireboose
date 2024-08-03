@@ -15,9 +15,7 @@ import {
 } from 'firebase/firestore';
 
 class FirestoreService {
-  constructor(private db = getFirestore()) {
-    this.db = db;
-  }
+  constructor(private db = getFirestore()) {}
 
   async get<T extends { id: string }>(
     path: string,
