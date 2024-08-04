@@ -85,7 +85,7 @@ export type GetQuerySortParsedValuesType = 'asc' | 'desc';
  *
  * @typedef {Object.<string, GetQuerySortValuesType>} GetQuerySortType
  */
-type GetQuerySortType = Record<string, GetQuerySortValuesType>;
+export type GetQuerySortType = Record<string, GetQuerySortValuesType>;
 
 /**
  * Represents a query.
