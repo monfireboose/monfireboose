@@ -75,8 +75,13 @@ const validateFields = (schema: SchemaObjectType, data: any) => {
       return validateField(schema[key], value);
     }
 
-    // TODO consider array case (SchemaObjectValueTypeType[])
-    return validateField(schema[key].type as SchemaObjectValueTypeType, value);
+    // if (Array.isArray(schema[key].type)) {
+    //   return schema[key].type.every((type: SchemaObjectValueTypeType) => {
+    //     return validateField(type, value);
+    //   });
+    // }
+
+    return validateField(schema[key].type, value);
   });
 };
 

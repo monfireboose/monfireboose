@@ -5,7 +5,7 @@ export type SchemaObjectValueTypeType =
   | 'date';
 
 export type SchemaObjectValueType = {
-  type: SchemaObjectValueTypeType | SchemaObjectValueTypeType[];
+  type: SchemaObjectValueTypeType; // TODO add support for arrays of this values
   required?: boolean;
   default?: any;
   ref?: string;
@@ -14,7 +14,7 @@ export type SchemaObjectValueType = {
 
 export type SchemaObjectType = Record<
   string,
-  SchemaObjectValueType | SchemaObjectValueTypeType // TODO add SchemaObjectValueTypeType[]
+  SchemaObjectValueType | SchemaObjectValueTypeType
 >;
 
 export type GetQueryFilterValueType = {
