@@ -1,18 +1,3 @@
-import { GetQueryFilterValueType } from './types';
-
-// export type GetQueryFilterValueType = {
-//   condition:
-//     | 'equals'
-//     | 'notEquals'
-//     | 'in'
-//     | 'not-in'
-//     | 'gt'
-//     | 'lt'
-//     | 'gte'
-//     | 'lte';
-//   value: any;
-// };
-
 export enum QueryConditionEnum {
   equals = '==',
   notEquals = '!=',

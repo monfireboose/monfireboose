@@ -5,12 +5,21 @@ import {
   GetQueryFilterType,
   GetQuerySortParsedValuesType,
   GetQuerySortValuesType,
+  SchemaObjectValueTypeType,
+  SchemaObjectType,
+  SchemaObjectValueType,
 } from './types';
 
 import { QueryConditionEnum } from './enums';
 
-const getQueryType = (q: GetQueryType): q is GetQueryFilterType => {
+const getIsQueryFilterType = (q: GetQueryType): q is GetQueryFilterType => {
   return q instanceof Object && 'condition' in q;
+};
+
+const getIsSchemaStringType = (
+  schema: SchemaObjectValueType | SchemaObjectValueTypeType,
+): schema is SchemaObjectValueTypeType => {
+  return typeof schema === 'string';
 };
 
 const getParsedOrder = (
@@ -29,7 +38,7 @@ const getParsedOrder = (
 
 const parseQuery = (query: GetQueryType[]): QueryConstraint[] => {
   return query.map((q) => {
-    if (getQueryType(q)) {
+    if (getIsQueryFilterType(q)) {
       const [field, filter] = Object.entries(q)[0]!;
 
       return where(field, QueryConditionEnum[filter.condition], filter);
@@ -43,4 +52,32 @@ const parseQuery = (query: GetQueryType[]): QueryConstraint[] => {
   });
 };
 
-export { parseQuery };
+const validateField = (field: SchemaObjectValueTypeType, value: any) => {
+  switch (field) {
+    case 'date':
+      return value instanceof Date;
+    case 'string':
+    case 'number':
+    case 'boolean':
+      return typeof value === field;
+    default:
+      return false;
+  }
+};
+
+const validateFields = (schema: SchemaObjectType, data: any) => {
+  return Object.entries(data).every(([key, value]: [string, any]) => {
+    if (!schema[key]) {
+      return false;
+    }
+
+    if (getIsSchemaStringType(schema[key])) {
+      return validateField(schema[key], value);
+    }
+
+    // TODO consider array case (SchemaObjectValueTypeType[])
+    return validateField(schema[key].type as SchemaObjectValueTypeType, value);
+  });
+};
+
+export { parseQuery, validateFields };

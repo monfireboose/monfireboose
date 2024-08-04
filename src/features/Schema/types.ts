@@ -1,6 +1,10 @@
-type SchemaObjectValueTypeType = 'string' | 'number' | 'boolean' | 'date';
+export type SchemaObjectValueTypeType =
+  | 'string'
+  | 'number'
+  | 'boolean'
+  | 'date';
 
-type SchemaObjectValueType = {
+export type SchemaObjectValueType = {
   type: SchemaObjectValueTypeType | SchemaObjectValueTypeType[];
   required?: boolean;
   default?: any;
@@ -10,7 +14,7 @@ type SchemaObjectValueType = {
 
 export type SchemaObjectType = Record<
   string,
-  SchemaObjectValueType | SchemaObjectValueTypeType
+  SchemaObjectValueType | SchemaObjectValueTypeType // TODO add SchemaObjectValueTypeType[]
 >;
 
 export type GetQueryFilterValueType = {

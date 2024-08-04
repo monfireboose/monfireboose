@@ -2,7 +2,7 @@ import pluralize from 'pluralize';
 
 import { FirestoreService } from '../FirestoreService/FirestoreService';
 
-import { parseQuery } from './helpers';
+import { parseQuery, validateFields } from './helpers';
 
 import { SchemaObjectType, GetQueryType } from './types';
 
@@ -17,7 +17,7 @@ class Schema {
   }
 
   get(...getQuery: GetQueryType[]) {
-    this.ctachError();
+    this.checkSchemaName();
 
     const parsedQuery = parseQuery(getQuery);
 
@@ -25,34 +25,45 @@ class Schema {
   }
 
   getDoc(id: string) {
-    this.ctachError();
+    this.checkSchemaName();
 
     return this.firestore.getDoc(this.name as string, id);
   }
 
   add(data: any) {
     // TODO make typeof Something
-    this.ctachError();
+    this.checkSchemaName();
+    this.checkIsValid(data);
 
     return this.firestore.add(this.name as string, data);
   }
 
   edit(data: any, id: string) {
     // TODO make typeof Something
-    this.ctachError();
+    this.checkSchemaName();
+    this.checkIsValid(data);
 
     return this.firestore.edit(this.name as string, data, id);
   }
 
   delete(id: string) {
-    this.ctachError();
+    this.checkSchemaName();
 
     return this.firestore.delete(this.name as string, id);
   }
 
-  ctachError() {
+  private checkSchemaName() {
     if (!this.name) {
       throw new Error('Model name is required');
+    }
+  }
+
+  private checkIsValid(data: any) {
+    const isValid = validateFields(this.schema, data);
+
+    if (!isValid) {
+      // TODO throw more sepcified error messages
+      throw new Error('Provided object does not match the Schema.');
     }
   }
 }
