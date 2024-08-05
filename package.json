@@ -1,6 +1,6 @@
 {
   "name": "fireboose",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A lightweight JavaScript library that provides a high level and model based API for interacting with Firebase.",
   "private": false,
   "main": "dist/index.js",
