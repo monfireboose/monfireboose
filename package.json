@@ -1,5 +1,5 @@
 {
-  "name": "fireboose",
+  "name": "monfireboose",
   "version": "0.1.3",
   "description": "A lightweight JavaScript library that provides a high level and model based API for interacting with Firebase.",
   "private": false,
@@ -58,7 +58,7 @@
   "author": "Albert Arakelyan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fireboose/fireboose/issues"
+    "url": "https://github.com/monfireboose/monfireboose/issues"
   },
-  "homepage": "https://github.com/fireboose/fireboose#readme"
+  "homepage": "https://github.com/monfireboose/monfireboose#readme"
 }
