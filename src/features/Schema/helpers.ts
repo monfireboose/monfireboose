@@ -83,14 +83,14 @@ const parseQuery = (query: GetQueryType[]): QueryConstraint[] => {
  * @param {any} value - The value to validate.
  * @return {boolean} Whether the value is valid for the field type.
  */
-const validateField = (field: SchemaObjectValueTypeType, value: any) => {
-  switch (field) {
-    case 'date':
+const validateField = (Type: SchemaObjectValueTypeType, value: any) => {
+  switch (Type) {
+    case Date:
       return value instanceof Date;
-    case 'string':
-    case 'number':
-    case 'boolean':
-      return typeof value === field;
+    case Number:
+    case String:
+    case Boolean:
+      return value.constructor === Type;
     default:
       return false;
   }

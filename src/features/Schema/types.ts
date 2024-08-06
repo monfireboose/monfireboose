@@ -4,10 +4,10 @@
  * @typedef {'string' | 'number' | 'boolean' | 'date'} SchemaObjectValueTypeType
  */
 export type SchemaObjectValueTypeType =
-  | 'string'
-  | 'number'
-  | 'boolean'
-  | 'date';
+  | StringConstructor
+  | NumberConstructor
+  | BooleanConstructor
+  | DateConstructor;
 
 /**
  * Represents a value in a schema object.
