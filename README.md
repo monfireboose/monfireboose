@@ -1,9 +1,9 @@
-# Fireboose
+# Monfireboose
 
 > A lightweight JavaScript library that provides a high level and model based API for interacting with **Firebase**.
 
 Use your [**Firebase**](https://firebase.google.com/) like [**Mongoose**](https://mongoosejs.com/). <br>
-Ever thought about using your **Firestore collections** like **Mongoose models**, Fireboose will help with this.
+Ever thought about using your **Firestore collections** like **Mongoose models**, Monfireboose will help with this.
 
 ## 👀 What can it do?
 
@@ -22,11 +22,11 @@ Install it locally in your project folder:
 
 ```bash
 # Using npm
-npm i fireboose
+npm i monfireboose
 # Or yarn
-yarn add fireboose
+yarn add monfireboose
 # Or pnpm
-pnpm add fireboose
+pnpm add monfireboose
 ```
 
 ## 💡 Usage
@@ -35,7 +35,7 @@ pnpm add fireboose
 - Create and validate Schemas like with **Mongoose**
 
 ```js
-import { connect, FirebaseConfig, Schema, model } from 'fireboose';
+import { connect, FirebaseConfig, Schema, model } from 'monfireboose';
 
 const config = new FirebaseConfig({
   apiKey: 'YOUR_API_KEY',
@@ -76,10 +76,12 @@ console.log(user.id);
 - getDoc - gets one document by ID
 - delete - delets document by ID
 
+_\*Note: Missing something? don't worry **Monfireboose** includes all **Firebase** native modules under_ `monfireboose/fire/needed_module`. `needed_module` _is you desired module e.g._ `auth`, `firestore`, `storage` _etc._
+
 ## 💬 Discussions
 
-Head over to the [discussions](https://github.com/fireboose/fireboose/discussions) to share your ideas.
+Head over to the [discussions](https://github.com/monfireboose/monfireboose/discussions) to share your ideas.
 
 ## 📄 License
 
-MIT © [Fireboose](https://github.com/fireboose) © [Albert Arakelyan](https://github.com/AlbertArakelyan)
+MIT © [Monfireboose](https://github.com/monfireboose) © [Albert Arakelyan](https://github.com/AlbertArakelyan)
