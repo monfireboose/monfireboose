@@ -52,18 +52,18 @@ connect(config).then((app) => {
 
 const userSchema = new Schema({
   name: {
-    type: 'string',
+    type: String,
     required: true,
   },
   age: {
-    type: 'number',
+    type: Number,
     required: true,
   },
 });
 
 const userModel = model('users', userSchema);
 
-const user = await userModel.add({ name: 'John', age: '30' });
+const user = await userModel.add({ name: 'John', age: 30 });
 
 console.log(user.id);
 ```
