@@ -104,11 +104,12 @@ class Schema {
    * @param {any} data - The data to validate against the schema.
    */
   private checkIsValid(data: any) {
-    const isValid = validateFields(this.schema, data);
+    const validationData = validateFields(this.schema, data);
 
-    if (!isValid) {
-      // TODO throw more sepcified error messages
-      throw new Error('Provided object does not match the Schema.');
+    if (!validationData.isValid) {
+      throw new Error(
+        validationData.reason || 'Provided object does not match the Schema.',
+      );
     }
   }
 }

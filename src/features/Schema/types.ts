@@ -93,3 +93,15 @@ export type GetQuerySortType = Record<string, GetQuerySortValuesType>;
  * @typedef {GetQueryFilterType | GetQuerySortType} GetQueryType
  */
 export type GetQueryType = GetQueryFilterType | GetQuerySortType;
+
+/**
+ * Represents the validation data type.
+ *
+ * @typedef {Object} ValidationDataType
+ * @property {boolean} isValid - Indicates whether the validation is valid.
+ * @property {string} [reason] - The reason for the validation failure (if any).
+ */
+export type ValidationDataType = {
+  isValid: boolean;
+  reason?: string;
+};

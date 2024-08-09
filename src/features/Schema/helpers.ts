@@ -8,6 +8,7 @@ import {
   SchemaObjectValueTypeType,
   SchemaObjectType,
   SchemaObjectValueType,
+  ValidationDataType,
 } from './types';
 
 import { QueryConditionEnum } from './enums';
@@ -83,16 +84,30 @@ const parseQuery = (query: GetQueryType[]): QueryConstraint[] => {
  * @param {any} value - The value to validate.
  * @return {boolean} Whether the value is valid for the field type.
  */
-const validateField = (Type: SchemaObjectValueTypeType, value: any) => {
+const validateField = (
+  Type: SchemaObjectValueTypeType,
+  value: any,
+  field: string,
+): ValidationDataType => {
   switch (Type) {
     case Date:
-      return value instanceof Date;
+      return value instanceof Date
+        ? { isValid: true }
+        : { isValid: false, reason: `${field} should be type of Date.` };
     case Number:
     case String:
     case Boolean:
-      return value.constructor === Type;
+      return value.constructor === Type
+        ? { isValid: true }
+        : {
+            isValid: false,
+            reason: `${field} should be type of ${Type.name}.`,
+          };
     default:
-      return false;
+      return {
+        isValid: false,
+        reason: `Unsupported type ${Type?.name} and/or field ${field}.`,
+      };
   }
 };
 
@@ -103,24 +118,39 @@ const validateField = (Type: SchemaObjectValueTypeType, value: any) => {
  * @param {any} data - The data object to validate.
  * @return {boolean} Returns true if all fields in the data object are valid according to the schema object, otherwise false.
  */
-const validateFields = (schema: SchemaObjectType, data: any) => {
-  return Object.entries(data).every(([key, value]: [string, any]) => {
+const validateFields = (
+  schema: SchemaObjectType,
+  data: any,
+): ValidationDataType => {
+  for (const key in data) {
+    const value = data[key];
+
     if (!schema[key]) {
-      return false;
+      return { isValid: false, reason: 'Field not found in schema.' };
     }
 
     if (getIsSchemaStringType(schema[key])) {
-      return validateField(schema[key], value);
+      const validationData = validateField(schema[key], value, key);
+
+      if (!validationData.isValid) {
+        return {
+          isValid: validationData.isValid,
+          reason: validationData.reason,
+        };
+      }
+    } else {
+      const validationData = validateField(schema[key].type, value, key);
+
+      if (!validationData.isValid) {
+        return {
+          isValid: validationData.isValid,
+          reason: validationData.reason,
+        };
+      }
     }
+  }
 
-    // if (Array.isArray(schema[key].type)) {
-    //   return schema[key].type.every((type: SchemaObjectValueTypeType) => {
-    //     return validateField(type, value);
-    //   });
-    // }
-
-    return validateField(schema[key].type, value);
-  });
+  return { isValid: true };
 };
 
 export { parseQuery, validateFields };
