@@ -43,7 +43,6 @@
     "storage",
     "firestore",
     "cloud",
-    "storage",
     "realtime",
     "cloud",
     "messaging",
