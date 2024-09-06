@@ -1,5 +1,7 @@
 import { where, orderBy, QueryConstraint } from 'firebase/firestore';
 
+import { FirestoreService } from '../FirestoreService/FirestoreService';
+
 import {
   GetQueryType,
   GetQueryFilterType,
@@ -153,4 +155,116 @@ const validateFields = (
   return { isValid: true };
 };
 
-export { parseQuery, validateFields };
+const createSchemeClassWithValue = (
+  modelName: string,
+  schema: SchemaObjectType,
+) => {
+  class SchemaWithValue {
+    constructor(public value: any) {
+      this.value = value;
+    }
+
+    static modelName?: string = modelName;
+    static schema: SchemaObjectType = schema;
+    static firestore = new FirestoreService();
+
+    save() {
+      return SchemaWithValue.add(this.value);
+    }
+
+    /**
+     * Retrieves data based on the provided query.
+     *
+     * @param {GetQueryType[]} getQuery - The query parameters to retrieve data.
+     * @return {any} The data retrieved based on the query.
+     */
+    static get(...getQuery: GetQueryType[]) {
+      this.checkSchemaName();
+
+      const parsedQuery = parseQuery(getQuery);
+
+      return this.firestore.get(this.modelName as string, ...parsedQuery);
+    }
+
+    /**
+     * Retrieves a document with the given ID.
+     *
+     * @param {string} id - The ID of the document to retrieve.
+     * @return {type} description of return value
+     */
+    static getDoc(id: string) {
+      this.checkSchemaName();
+
+      return this.firestore.getDoc(this.modelName as string, id);
+    }
+
+    /**
+     * Adds data to the Firestore.
+     *
+     * @param {any} data - The data to be added to the Firestore.
+     * @return {any} The result of adding the data to the Firestore.
+     */
+    static add(data: any) {
+      // TODO make typeof Something
+      this.checkSchemaName();
+      this.checkIsValid(data);
+
+      return this.firestore.add(this.modelName as string, data);
+    }
+
+    /**
+     * Edits a document in Firestore with the provided data and ID.
+     *
+     * @param {any} data - The data to edit the document with.
+     * @param {string} id - The ID of the document to be edited.
+     * @return {any} The result of editing the document in Firestore.
+     */
+    static edit(data: any, id: string) {
+      // TODO make typeof Something
+      this.checkSchemaName();
+      this.checkIsValid(data);
+
+      return this.firestore.edit(this.modelName as string, data, id);
+    }
+
+    /**
+     * Deletes a document in Firestore based on the provided ID.
+     *
+     * @param {string} id - The ID of the document to be deleted.
+     * @return {any} The result of deleting the document in Firestore.
+     */
+    static delete(id: string) {
+      this.checkSchemaName();
+
+      return this.firestore.delete(this.modelName as string, id);
+    }
+
+    /**
+     * Checks if the model name is defined, throws an error if not.
+     */
+    static checkSchemaName() {
+      if (!this.modelName) {
+        throw new Error('Model name is required');
+      }
+    }
+
+    /**
+     * Validates the provided data against the schema and throws an error if the data does not match.
+     *
+     * @param {any} data - The data to validate against the schema.
+     */
+    static checkIsValid(data: any) {
+      const validationData = validateFields(this.schema, data);
+
+      if (!validationData.isValid) {
+        throw new Error(
+          validationData.reason || 'Provided object does not match the Schema.',
+        );
+      }
+    }
+  }
+
+  return SchemaWithValue;
+};
+
+export { parseQuery, validateFields, createSchemeClassWithValue };

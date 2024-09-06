@@ -2,7 +2,11 @@ import pluralize from 'pluralize';
 
 import { FirestoreService } from '../FirestoreService/FirestoreService';
 
-import { parseQuery, validateFields } from './helpers';
+import {
+  parseQuery,
+  validateFields,
+  createSchemeClassWithValue,
+} from './helpers';
 
 import { SchemaObjectType, GetQueryType } from './types';
 
@@ -136,7 +140,15 @@ const model = (modelName: string, schema: Schema) => {
     throw new Error('Model name is required');
   }
 
-  return schema;
+  const SchemaWithValue = createSchemeClassWithValue(modelName, schema.schema);
+
+  if (!SchemaWithValue) {
+    throw new Error('Schema is required');
+  }
+
+  // TODO add checks for SchemaWithValue.name and SchemaWithValue.schema
+
+  return SchemaWithValue;
 };
 
 export { Schema, model };
