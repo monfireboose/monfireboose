@@ -90,7 +90,21 @@ const validateField = (
   Type: SchemaObjectValueTypeType,
   value: any,
   field: string,
+  options?: {
+    required?: boolean;
+    nullable?: boolean;
+  },
 ): ValidationDataType => {
+  if (options !== undefined) {
+    if (options.required === true && value === undefined) {
+      return { isValid: false, reason: `${field} is required.` };
+    }
+
+    if (options.nullable !== true && value === null) {
+      return { isValid: false, reason: `${field} cannot be null.` };
+    }
+  }
+
   switch (Type) {
     case Date:
       return value instanceof Date
@@ -141,7 +155,10 @@ const validateFields = (
         };
       }
     } else {
-      const validationData = validateField(schema[key].type, value, key);
+      const validationData = validateField(schema[key].type, value, key, {
+        required: schema[key].required,
+        nullable: schema[key].nullable,
+      });
 
       if (!validationData.isValid) {
         return {
@@ -179,7 +196,7 @@ const createSchemeClassWithValue = (
      * @return {any} The data retrieved based on the query.
      */
     static get(...getQuery: GetQueryType[]) {
-      this.checkSchemaName();
+      this._checkSchemaName();
 
       const parsedQuery = parseQuery(getQuery);
 
@@ -193,7 +210,7 @@ const createSchemeClassWithValue = (
      * @return {type} description of return value
      */
     static getDoc(id: string) {
-      this.checkSchemaName();
+      this._checkSchemaName();
 
       return this.firestore.getDoc(this.modelName as string, id);
     }
@@ -206,8 +223,8 @@ const createSchemeClassWithValue = (
      */
     static add(data: any) {
       // TODO make typeof Something
-      this.checkSchemaName();
-      this.checkIsValid(data);
+      this._checkSchemaName();
+      this._checkIsValid(data);
 
       return this.firestore.add(this.modelName as string, data);
     }
@@ -221,8 +238,8 @@ const createSchemeClassWithValue = (
      */
     static edit(data: any, id: string) {
       // TODO make typeof Something
-      this.checkSchemaName();
-      this.checkIsValid(data);
+      this._checkSchemaName();
+      this._checkIsValid(data);
 
       return this.firestore.edit(this.modelName as string, data, id);
     }
@@ -234,7 +251,7 @@ const createSchemeClassWithValue = (
      * @return {any} The result of deleting the document in Firestore.
      */
     static delete(id: string) {
-      this.checkSchemaName();
+      this._checkSchemaName();
 
       return this.firestore.delete(this.modelName as string, id);
     }
@@ -242,7 +259,7 @@ const createSchemeClassWithValue = (
     /**
      * Checks if the model name is defined, throws an error if not.
      */
-    static checkSchemaName() {
+    static _checkSchemaName() {
       if (!this.modelName) {
         throw new Error('Model name is required');
       }
@@ -253,7 +270,7 @@ const createSchemeClassWithValue = (
      *
      * @param {any} data - The data to validate against the schema.
      */
-    static checkIsValid(data: any) {
+    static _checkIsValid(data: any) {
       const validationData = validateFields(this.schema, data);
 
       if (!validationData.isValid) {
