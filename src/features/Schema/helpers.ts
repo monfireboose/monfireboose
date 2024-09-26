@@ -90,7 +90,21 @@ const validateField = (
   Type: SchemaObjectValueTypeType,
   value: any,
   field: string,
+  options?: {
+    required?: boolean;
+    nullable?: boolean;
+  },
 ): ValidationDataType => {
+  if (options !== undefined) {
+    if (options.required === true && value === undefined) {
+      return { isValid: false, reason: `${field} is required.` };
+    }
+
+    if (options.nullable !== true && value === null) {
+      return { isValid: false, reason: `${field} cannot be null.` };
+    }
+  }
+
   switch (Type) {
     case Date:
       return value instanceof Date
@@ -141,7 +155,10 @@ const validateFields = (
         };
       }
     } else {
-      const validationData = validateField(schema[key].type, value, key);
+      const validationData = validateField(schema[key].type, value, key, {
+        required: schema[key].required,
+        nullable: schema[key].nullable,
+      });
 
       if (!validationData.isValid) {
         return {
